@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超级外链工具 - YiOVE</title>
+    <meta name="Keywords" content="网站SEO宣传，超级外链工具，自动宣传网站，网站自动宣传工具,网站自动化宣传机器,网站外链群发"/>
+    <meta name="Description" content="超级外链工具可以批量增加网站外链,全部实现自动化外链群发，无需人工操作，是网络推广必备工具。"/>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <script src="layui/layui.all.js"></script>
+    <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>超级外链工具 - YiOVE</legend>
+</fieldset>
+<div style="padding: 10px; background-color: #F2F2F2;margin-left: 10%;margin-right: 10%;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">程序说明</div>
+                <div class="layui-card-body">
+                    外链工具只是网站推广的辅助工具，一般适用于短时间内无法建设大量外链的新站，新站应坚持每天做一到两次为宜，大约一周左右能看到效果。老站不建议使用此类工具，老站应以优质内容建设为主，辅以交换优质的友情链接和高权重站点发布软文来建立外链方为上策。
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header"><a href="https://www.yiove.com" target="_blank">YiOVE官网</a></div>
+                <div class="layui-card-body">
+                    <form class="layui-form layui-form-pane" action="">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">http(s)://</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="url" lay-verType="tips" lay-verify="urls"
+                                       lay-reqText="这个地方一定要填写哦" autocomplete="off" required="required"
+                                       placeholder="提示：网址不要加https://，域名后面不加/，效果更佳"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">每页条数</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="num" id="numm" lay-verType="tips"
+                                       lay-reqText="这个地方一定要填写哦" autocomplete="off" required="required"
+                                       placeholder="不可以超过30"
+                                       class="layui-input" value="15">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <button id="Teacher" type="submit" lay-submit lay-filter="*"
+                                    class="layui-btn layui-btn-fluid">开始推广
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header">外链结果<span style="float: right;margin-top: 12px;"
+                                                         class="layui-hide layui-badge layui-bg-blue wailian"></span>
+                </div>
+                <div class="layui-card-body">
+                    <fieldset class="layui-elem-field layui-hide">
+                        <legend>运行状态</legend>
+                        <div class="layui-field-box">
+                            当前页数：<span class="layui-badge layui-bg-green teacher_page">1</span>
+                            <span style="margin-left: 5px">推广进度：<span
+                                    class="layui-badge layui-bg-cyan teacher_progress">/</span></span>
+                    </fieldset>
+                    <table id="seo" lay-filter="seodata"></table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    layui.$(function () {
+        layer.msg("欢迎使用超级外链工具！");
+        let a = 'background: #606060; color: #fff; border-radius: 3px 0 0 3px;font: 14px Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;'
+        let b = 'background: #1475B2; color: #fff; border-radius: 0 3px 3px 0;font: 14px Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-serif;'
+        console.log(`%c 作者 : %c YiOVE `, a, b);
+        console.log(`%c 程序描述 : %c 超级外链工具 `, a, b);
+        layui.use(['form', 'table'], function () {
+            var table = layui.table, form = layui.form, element = layui.element;
+            element.init();
+            table.render({
+                elem: '#seo',
+                url: false,
+                data: [],
+                size: "sm",
+                limit: 599928887,
+                title: "外链结果",
+                even: true,
+                cols: [[
+                    {field: 'id', title: 'ID', align: "center", width: 50},
+                    {field: 'url', title: '推广URL', align: "center"},
+                    {field: 'seourl', title: '外链目标网址', align: "center"},
+                    {field: 'code', title: '状态', templet: "#code", width: 80, align: "center"}
+                ]]
+            });
+
+            function table_teacher(id, data) {
+                if (data === undefined) {
+                    data = [];
+                }
+                table.reload(id, {
+                    data: data,
+                    cols: [[
+                        {field: 'id', title: 'ID', align: "center", width: 50},
+                        {field: 'url', title: '推广URL', align: "center", width: 150},
+                        {field: 'seourl', title: '外链目标网址', align: "center"},
+                        {field: 'code', title: '状态', templet: "#code", width: 80, align: "center"}
+                    ]]
+                });
+            }
+
+            form.verify({
+                urls: function (value) {
+                    if (/^(?!http:\/\/|!?https:\/\/)([\w.]+\/?)\S*/.test(value) === false) {
+                        return '不能包含http(s)://，结尾不能以/结尾';
+                    }
+                    if (/^([^\/]([\s\S]*[^\/])?)?$/.test(value) === false) {
+                        return '不能以/结尾';
+                    }
+                }
+            });
+            form.on('submit(*)', function (data) {
+                if (data.field.num > 30) {
+                    layer.tips('不能大于30哦！', '#numm', {
+                        tips: 1
+                    });
+                    layui.$("input[name='num']").val(15);
+                    return false
+                }
+                if (data.field.num <= 0) {
+                    layer.tips('你是不想发了吗？', '#numm', {
+                        tips: 1
+                    });
+                    layui.$("input[name='num']").val(15);
+                    return false
+                }
+                if (table.cache["seo"].length > 0) {
+                    window.clearInterval(window.start);
+                    table_teacher("seo");
+                    layer.msg('已停止！');
+                    layui.$("#Teacher").html("开始推广").removeClass('layui-btn-danger');
+                } else {
+                    let page = 0;
+                    let num = data.field.num;
+                    layui.$('.layui-elem-field').removeClass('layui-hide');
+                    start();
+                    window.start = setInterval(start, num * 1000);
+                    layui.$("#Teacher").html("停止推广").addClass('layui-btn-danger');
+
+                    function start() {
+                        layui.$.ajax({
+                            url: "data.php",
+                            dataType: "JSON",
+                            data: {page: page, num: num},
+                            type: "GET",
+                            success: function (urldata) {
+                                layui.$(".wailian").html("总外链条数：" + urldata.count);
+                                layui.$(".wailian").removeClass('layui-hide');
+                                layui.$(".teacher_page").html(page + ' / ' + Math.ceil(urldata.count / num));
+                                layui.$(".teacher_progress").html((page + 1) * urldata.data.length + ' / ' + urldata.count);
+                                page += 1;
+                                if (urldata.code === 1) {
+                                    window.clearInterval(window.start);
+                                } else {
+                                    let arr = [],
+                                        len = urldata.data.length;
+                                    for (var i = 0; i < len; i++) {
+                                        arr.push({
+                                            id: i + 1,
+                                            url: data.field.url,
+                                            seourl: urldata.data[i].replace('***', data.field.url),
+                                        });
+                                    }
+                                    table_teacher("seo", arr);
+                                }
+                            },
+                            error: function () {
+                                layer.msg('网络错误');
+                            }
+                        });
+                    }
+                }
+                return false;
+            });
+            table.on('row(seodata)', function (obj) {
+                layer.open({
+                    type: 2,
+                    area: ['500px', '300px'],
+                    content: [obj.data.seourl, 'no'],
+                    btn: ['关闭'],
+                    shadeClose: true
+                });
+            });
+        });
+    });
+</script>
+<script type="text/html" id="code">
+    <iframe src='url.html?{{d.seourl}}' height='22' width='46' marginwidth='0' marginheight='0' hspace='0' vspace='0'
+            frameborder='0' scrolling='no'></iframe>
+</script>
+</body>
+</html>
