@@ -12,9 +12,9 @@
 1. 去除无用的说明与更新日志
 2. 调整整体窗口margin比例，使其看起来更顺眼。
 
-![image-20230728114520564](https://myfile.qian.blue/image/2023/07/803932fd40909a6d4b722ab96fbac06b.png)
+![image-20230728114520564](https://static.wusuov.com/image/2023/07/803932fd40909a6d4b722ab96fbac06b.png)
 
-![image-20230728114540481](https://myfile.qian.blue/image/2023/07/6144a12733a209e3ff601831910cf7e9.png)
+![image-20230728114540481](https://static.wusuov.com/image/2023/07/6144a12733a209e3ff601831910cf7e9.png)
 
 ## 结语
 
